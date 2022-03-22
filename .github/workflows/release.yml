@@ -1,0 +1,28 @@
+name: release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v2
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+      - uses: gradle/wrapper-validation-action@v1
+      - uses: mcenv/setup-minecraft@main
+        id: minecraft
+      - run: |
+          java -jar minecraft/server.jar nogui
+          java -cp "$(unzip -p minecraft/server.jar META-INF/classpath-joined)" net.minecraft.data.Main --server
+      - run: ./gradlew run
+      - uses: actions/upload-artifact@v3
+        with:
+          name: VanillaFree
+          path: |
+            VanillaFree0.zip
+            VanillaFree1.zip
