@@ -11,12 +11,6 @@ jobs:
       after: ${{ steps.minecraft.outputs.version }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-java@v2
-        with:
-          distribution: "temurin"
-          java-version: "17"
-          cache: "gradle"
-      - uses: gradle/wrapper-validation-action@v1
       - id: version
         run: echo "::set-output name=version::$(cat VERSION)"
       - id: minecraft
@@ -26,6 +20,14 @@ jobs:
     if: ${{ needs.check.outputs.before != needs.check.outputs.after }}
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v2
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+      - uses: gradle/wrapper-validation-action@v1
+      - uses: mcenv/setup-minecraft@main
       - run: |
           java -jar minecraft/server.jar nogui
           java -cp "$(unzip -p minecraft/server.jar META-INF/classpath-joined)" net.minecraft.data.Main --server
