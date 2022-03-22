@@ -14,8 +14,12 @@ jobs:
           java-version: "17"
           cache: "gradle"
       - uses: gradle/wrapper-validation-action@v1
-      - uses: mcenv/setup-minecraft@main
-        id: minecraft
+      - id: version
+        run: echo "::set-output name=version::$(cat VERSION)"
+      - id: minecraft
+        uses: mcenv/setup-minecraft@main
+        with:
+          skippedVersion: ${{ steps.version.outputs.version }}
       - run: |
           java -jar minecraft/server.jar nogui
           java -cp "$(unzip -p minecraft/server.jar META-INF/classpath-joined)" net.minecraft.data.Main --server
@@ -26,3 +30,9 @@ jobs:
           path: |
             VanillaFree0.zip
             VanillaFree1.zip
+      - run: |
+          echo "${{ steps.minecraft.outputs.version }}" > VERSION
+          git config --global user.name "intsuc"
+          git config --global user.email "intsuc@users.noreply.github.com"
+          git commit -am "${{ steps.minecraft.outputs.version }}"
+          git push
