@@ -32,15 +32,15 @@ jobs:
           java -jar minecraft/server.jar nogui
           java -cp "$(unzip -p minecraft/server.jar META-INF/classpath-joined)" net.minecraft.data.Main --server
       - run: ./gradlew run
-      - uses: actions/upload-artifact@v3
+      - uses: softprops/action-gh-release@v1
         with:
-          name: VanillaFree
-          path: |
+          files: |
             VanillaFree0.zip
             VanillaFree1.zip
+          tag_name: ${{ needs.check.outputs.after }}
       - run: |
-          echo "${{ steps.minecraft.outputs.version }}" > VERSION
+          echo "${{ needs.check.outputs.after }}" > VERSION
           git config --global user.name "intsuc"
           git config --global user.email "intsuc@users.noreply.github.com"
-          git commit -am "${{ steps.minecraft.outputs.version }}"
+          git commit -am "${{ needs.check.outputs.after }}"
           git push
