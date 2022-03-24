@@ -36,6 +36,7 @@ jobs:
       - run: ./gradlew run
       - uses: softprops/action-gh-release@v1
         with:
+          body: ${{ needs.check.outputs.after }}
           files: |
             VanillaFree0.zip
             VanillaFree1.zip
