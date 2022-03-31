@@ -12,9 +12,11 @@ val RECIPE = """{"type":"crafting_special_armordye"}""".toByteArray()
 val TAG = """{"replace":true,"values":[]}""".toByteArray()
 
 fun main() {
+    val license = File("LICENSE").readBytes()
     val generated = Paths.get("generated")
 
     ZipOutputStream(File("VanillaFree0.zip").outputStream().buffered()).use { output ->
+        output.writeFile("LICENSE", license)
         output.writeFile("pack.mcmeta", PACK_0)
 
         Files.walk(generated.resolve("data"))
@@ -35,6 +37,7 @@ fun main() {
     }
 
     ZipOutputStream(File("VanillaFree1.zip").outputStream().buffered()).use { output ->
+        output.writeFile("LICENSE", license)
         output.writeFile("pack.mcmeta", PACK_1)
     }
 }
