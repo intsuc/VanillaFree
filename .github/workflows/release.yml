@@ -27,13 +27,14 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "17"
-          cache: "gradle"
       - uses: gradle/wrapper-validation-action@v1
       - uses: mcenv/setup-minecraft@v1
       - run: |
           java -jar minecraft/server.jar nogui
           java -cp "$(unzip -p minecraft/server.jar META-INF/classpath-joined)" net.minecraft.data.Main --server
-      - run: ./gradlew run
+      - uses: gradle/gradle-build-action@v2
+        with:
+          arguments: run
       - uses: softprops/action-gh-release@v1
         with:
           body: ${{ needs.check.outputs.after }}
