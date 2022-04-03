@@ -2,7 +2,7 @@
 
 VanillaFree is a datapack that reduces the memory footprint of unused vanilla resources.
 
-## Background
+## Motivation
 
 Since [22w11a](https://www.minecraft.net/article/minecraft-snapshot-22w11a), resources can be filtered out by pack
 filters. However, pack filters only control the visibility of resources; they are still allocated in memory. VanillaFree
