@@ -16,7 +16,7 @@ jobs:
       - id: version
         run: echo "::set-output name=version::$(cat VERSION)"
       - id: minecraft
-        uses: mcenv/setup-minecraft@main
+        uses: mcenv/setup-minecraft@v2
   release:
     needs: check
     if: ${{ needs.check.outputs.before != needs.check.outputs.after }}
