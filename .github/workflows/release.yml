@@ -28,9 +28,9 @@ jobs:
           distribution: "temurin"
           java-version: "17"
       - uses: gradle/wrapper-validation-action@v1
-      - uses: mcenv/setup-minecraft@v1
+      - uses: mcenv/setup-minecraft@v2
       - run: |
-          java -jar minecraft/server.jar nogui
+          minecraft
           java -cp "$(unzip -p minecraft/server.jar META-INF/classpath-joined)" net.minecraft.data.Main --server
       - uses: gradle/gradle-build-action@v2
         with:
