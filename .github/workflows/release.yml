@@ -17,6 +17,8 @@ jobs:
         run: echo "::set-output name=version::$(cat VERSION)"
       - id: minecraft
         uses: mcenv/setup-minecraft@v2
+        with:
+          version: "snapshot"
   release:
     needs: check
     if: ${{ needs.check.outputs.before != needs.check.outputs.after }}
@@ -29,6 +31,8 @@ jobs:
           java-version: "17"
       - uses: gradle/wrapper-validation-action@v1
       - uses: mcenv/setup-minecraft@v2
+        with:
+          version: "snapshot"
       - run: |
           minecraft
           java -cp "$(unzip -p minecraft/server.jar META-INF/classpath-joined)" net.minecraft.data.Main --server
