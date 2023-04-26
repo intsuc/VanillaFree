@@ -14,7 +14,7 @@ jobs:
       - id: version
         run: echo "::set-output name=version::$(cat VERSION)"
       - id: minecraft
-        uses: mcenv/setup-minecraft@v2
+        uses: mcenv/setup-minecraft@v3
         with:
           version: "snapshot"
   release:
@@ -28,7 +28,7 @@ jobs:
           distribution: "temurin"
           java-version: "17"
       - uses: gradle/wrapper-validation-action@v1
-      - uses: mcenv/setup-minecraft@v2
+      - uses: mcenv/setup-minecraft@v3
         with:
           version: "snapshot"
       - run: |
